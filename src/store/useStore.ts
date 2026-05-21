@@ -52,7 +52,8 @@ export const useStore = create<AppState>((set, get) => ({
       const data = await aliIoT.fetchData(config);
       if (data) {
         await database.insertData(data);
-        set({ currentData: data });
+        const historyData = await database.getRecentData(500);
+        set({ currentData: data, historyData });
       }
     } catch (error) {
       console.error('Error fetching data:', error);

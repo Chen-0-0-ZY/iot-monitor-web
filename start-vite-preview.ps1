@@ -1,0 +1,10 @@
+Set-Location "d:\trae_test\temp-backup"
+$env:Path = "C:\Program Files\nodejs;$env:Path"
+Write-Host "Starting Vite preview server..."
+Write-Host "The application will be available at:"
+Write-Host "  http://localhost:4173/ (without base path)"
+Write-Host "  http://localhost:4173/iot-monitor-web/ (with base path)"
+Write-Host ""
+Write-Host "Press Ctrl+C to stop the server"
+Write-Host ""
+& node node_modules/vite/bin/vite.js preview --port 4173 --host localhost

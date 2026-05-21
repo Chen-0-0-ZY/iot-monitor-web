@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/iot-monitor-web/sw.js', { scope: '/iot-monitor-web/' })})}

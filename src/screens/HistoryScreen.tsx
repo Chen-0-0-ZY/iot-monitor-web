@@ -4,7 +4,7 @@ import { COLORS } from '../types';
 import dayjs from 'dayjs';
 
 export const HistoryScreen: React.FC = () => {
-  const { historyData, loadHistoryData, syncHistoryData, clearAllData, isSyncing, config } = useStore();
+  const { historyData, loadHistoryData, syncHistoryData, clearAllData, isSyncing, config, fetchCurrentData } = useStore();
   const [filter, setFilter] = useState<'today' | 'week' | 'month' | 'all'>('all');
   const [selectedData, setSelectedData] = useState<any>(null);
   const [syncStartDate, setSyncStartDate] = useState<string>(dayjs().subtract(7, 'day').format('YYYY-MM-DD'));
@@ -18,12 +18,13 @@ export const HistoryScreen: React.FC = () => {
 
   useEffect(() => {
     if (config.refreshInterval > 0) {
-      const interval = setInterval(() => {
-        loadHistoryData();
+      const interval = setInterval(async () => {
+        // 先尝试获取新数据，然后刷新历史数据
+        await fetchCurrentData();
       }, config.refreshInterval * 1000);
       return () => clearInterval(interval);
     }
-  }, [config.refreshInterval, loadHistoryData]);
+  }, [config.refreshInterval, fetchCurrentData]);
 
   const filteredData = historyData.filter(item => {
     const itemDate = dayjs(item.timestamp);

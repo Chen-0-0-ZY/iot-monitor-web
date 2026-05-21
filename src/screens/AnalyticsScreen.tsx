@@ -4,16 +4,17 @@ import { EnhancedTrendChart } from '../components/EnhancedTrendChart';
 import { useStore } from '../store/useStore';
 
 export const AnalyticsScreen: React.FC = () => {
-  const { config, loadHistoryData } = useStore();
+  const { config, fetchCurrentData } = useStore();
 
   useEffect(() => {
     if (config.refreshInterval > 0) {
-      const interval = setInterval(() => {
-        loadHistoryData();
+      const interval = setInterval(async () => {
+        // 先尝试获取新数据，然后刷新历史数据
+        await fetchCurrentData();
       }, config.refreshInterval * 1000);
       return () => clearInterval(interval);
     }
-  }, [config.refreshInterval, loadHistoryData]);
+  }, [config.refreshInterval, fetchCurrentData]);
 
   return (
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: COLORS.background }}>

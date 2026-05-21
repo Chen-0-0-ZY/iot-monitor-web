@@ -4,7 +4,7 @@
   "description": "ESP32温湿度监控网页应用",
   "scripts": {
     "dev": "vite",
-    "build": "\"C:\\Program Files\\nodejs\\node.exe\" node_modules/typescript/bin/tsc && \"C:\\Program Files\\nodejs\\node.exe\" node_modules/vite/bin/vite.js build",
+    "build": "npx tsc && npx vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
